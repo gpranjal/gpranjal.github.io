@@ -1,38 +1,18 @@
-<!doctype html>
-<html>
-  <head>
-    <title>Submit Form to Google Sheets!</title>
-  </head>
-  <body>
-    <p>Submit the form here and you data will appear in <strong>Google sheet</strong> </p>
-  </body>
-  
-  <form id="test-form">
-  
-  <div>
-    <label>Name</label>
-    <input type="text" name="form_field_1" placeholder="Name"/>
-  </div>
-
-  <div>
-    <label>Email</label>
-    <input type="text" name="form_field_2" placeholder="Email"/>
-  </div>
-  
-  <div>
-    <label>Address</label>
-    <input type="text" name="form_field_3" placeholder="Address"/>
-  </div>
-  
-  <div>
-    <label>Occupation</label>
-    <input type="text" name="form_field_4" placeholder="Occupation"/>
-  </div>
-
-  <div>
-    <button type="submit"id="submit-form">Submit</button>
-  </div>
-
+<form name="submit-to-google-sheet">
+   <input name="email" type="email" placeholder="Email" required>
+  <input name="fname" type="text" placeholder="First Name">
+  <input name="lname" type="text" placeholder="Last Name">
+  <button type="submit">Send</button>
 </form>
-  
-</html>
+
+<script>
+  const scriptURL = 'https://script.google.com/macros/s/AKfycbyvJE79uZz_MYLqit8mTG6vWaxoav_fToTIBCNFYs_ot106czqc/exec'
+  const form = document.forms['submit-to-google-sheet']
+
+  form.addEventListener('submit', e => {
+    e.preventDefault()
+    fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+      .then(response => console.log('Success!', response))
+      .catch(error => console.error('Error!', error.message))
+  })
+</script>
